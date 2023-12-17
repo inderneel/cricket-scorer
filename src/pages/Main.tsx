@@ -7,9 +7,51 @@ import GameStarted from './GameStarted';
 import Toss from "./Toss";
 
 interface Game {
-    team1Name: string | undefined,
-    team2Name: string | undefined,
+    team1Name: string | undefined;
+    team2Name: string | undefined;
+    team1: Team | undefined;
+    team2: Team | undefined;
+}
 
+const initialGame = (): Game => {
+    const game: Game = 
+     {team1Name: undefined, team2Name: undefined, team1: undefined, team2: undefined};
+
+     return game;
+}
+
+interface Team {
+    players: Player[];
+}
+
+interface Player {
+    bowler: Bowler;
+    batsman: Batsman;
+    name: string;
+    age: number;
+}
+
+interface Batsman {
+    score: number;
+    balls: number;
+    dots: number;
+    fours: number;
+    sixes: number;
+}
+
+interface Bowler {
+    overs: Over[],    
+}
+
+interface Over {
+    balls : Ball[];
+}
+
+interface Ball {
+    bowlername: string;
+    batsman: string;
+    runs: number;
+    ballType: string;
 }
 
 const GameStates = {
@@ -21,8 +63,7 @@ function Main() {
 
     const [gameState, setGameState] = useState<string>(GameStates.Initialize);
     const [showModal, setShowModal] = useState<boolean>(false);
-    const [game, setGame] = useState<Game>({team1Name:undefined, team2Name: undefined});
-
+    const [game, setGame] = useState<Game>(initialGame());
 
     function closeModal(){
         setShowModal(false);
@@ -34,6 +75,10 @@ function Main() {
 
     function StartGame(){
         setGameState(GameStates.InProgress);
+    }
+
+    const GoBack = () =>{
+        setGameState(GameStates.Initialize);
     }
 
     function AddGameBody() {
@@ -74,16 +119,8 @@ function Main() {
 >
     <div className="gameBody">
         {AddGameBody()}
+        { gameState != GameStates.Initialize  &&  <Button onClick={() => GoBack()}>Back</Button>}
     </div>
-    {/* <div>Test</div> */}
-  {/* <Box sx={style}>
-    <Typography id="modal-modal-title" variant="h6" component="h2">
-      Text in a modal
-    </Typography>
-    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-      Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-    </Typography>
-  </Box> */}
 </Modal>
         <button type="button" onClick={showAddGame} >Add Game</button>
     </>

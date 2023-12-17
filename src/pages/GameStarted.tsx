@@ -1,16 +1,19 @@
 import React from "react";
 import { TextField, Input, Button, Modal } from "@mui/material";
 
-const GameStarted: any = (setGoBack: any) => {
-    
-    const GoBack = () =>{
-        //setGoBack(prev => {prev = !prev});
-    }
+const GameStarted: any = () => {
 
+    const startScoring= () =>{
+        
+    }
+    
     return (
     <>
         <div>Game started</div>
-        <Button onClick={() => GoBack()}>Back</Button>
+        <div>
+            <TextField label="Batsman"></TextField>
+            <Button onClick={() => startScoring()}>+ Add Batnsman</Button>
+        </div>
     </>
     );
 }
